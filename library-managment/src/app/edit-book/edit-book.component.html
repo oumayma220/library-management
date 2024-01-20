@@ -1,0 +1,62 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="container">
+
+            <div class="col-md-2">
+
+            </div>
+
+            <div class="box">
+                <div class="box__head">
+                    <img src="../../assets/Médiathèque (1).png">
+                </div>
+                <div class="box__content">
+                    <h2></h2>
+                    <form [formGroup]="bookFormGroup" (ngSubmit)="handleUpdateBook()">
+                        <pre>
+                      
+
+                    </pre>
+
+
+                        <div class="mb-3">
+                            <label class="form-label" style="color: white;"><b>Titre:</b></label>
+                            <label class="form-label" style="color: azure;">{{book.title}}</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" style="color: bisque;"> <b>nouveau titre</b></label>
+                            <pre>
+  
+                          </pre>
+
+                            <input type="text" formControlName="title" class="form-control">
+                            <small *ngIf="bookFormGroup.controls['title'].errors && bookFormGroup.controls['title'].touched" class="text-danger">
+                  {{bookService.getErrorMessage('Title',bookFormGroup.controls['title'].errors)}}
+                </small>
+                        </div>
+
+                        <input type="checkbox" class="form-check-input" id="status" formControlName="status">
+                        <label class="form-check-label" for="form2Example3" style="color: white;"><pre>  Statut</pre>
+                          </label>
+
+                        <pre>
+
+                        </pre>
+
+                        <button pButton [disabled]="!bookFormGroup.valid" label="Save" class="btn btn-info btn-lg mon-bouton" type="submit" style="color: rgb(255, 255, 255);">Enregistrer</button>
+
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+        </div>
+
+    </div>
+
+</div>

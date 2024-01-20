@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/home">Médiathèque</a>
+        <button class="navbar-toggler" type="button" pButton icon="pi-power-off"></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/home">acceuil</a>
+                </li>
+                <li class="nav-item" *ngIf="authService.hasRole('ADMIN')">
+                    <a class="nav-link active" aria-current="page" routerLink="/admin/Users">Utilisateurs</a>
+                </li>
+
+                <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                    <a class="nav-link active" aria-current="page" routerLink="/admin/Books">livres</a>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/login">connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/signup">inscripition</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ">
+                <li>
+                    <a class="nav-link ">
+            {{authService.authenticatedUser!.name}}
+          </a>
+                </li>
+                <li class="nav-item">
+                    <button pButton icon="pi pi-power-off" (click)="handleLogout()" label=""></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<app-landing *ngIf="router.url === '/admin'"></app-landing>
+<router-outlet></router-outlet>

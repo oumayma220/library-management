@@ -1,0 +1,35 @@
+/* Couleur de fond de la barre de navigation */
+.navbar {
+  background-color: #333;
+}
+
+/* Couleur de texte pour les éléments de navigation */
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+
+/* Couleur de texte pour le logo de la barre de navigation */
+.navbar-brand {
+  color: #fff;
+}
+
+/* Style de bordure pour le bouton de la barre de navigation */
+.navbar-toggler {
+  border-color: #fff;
+}
+
+/* Style de bordure pour les liens actifs de la barre de navigation */
+.navbar-nav .nav-link.active {
+  border-bottom: 2px solid #fff;
+}
+
+/* Positionnement et style de texte pour le nom de l'utilisateur authentifié */
+.navbar-nav li:first-child a {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Style de texte pour le bouton de déconnexion */
+.navbar-nav .nav-item:last-child button {
+  color: #fff;
+}

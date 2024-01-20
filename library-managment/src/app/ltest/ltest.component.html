@@ -1,0 +1,81 @@
+<app-admin-template></app-admin-template>
+
+<button pButton label="New Book" class="p-button-primary"  (click)="handleNewBook()" ></button>
+
+<div class="container mt-2">
+  <div *ngIf="searchFormGroup">
+    <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchBooks()">
+      <div class="input-group">
+        <span class="input-group-addon">
+        </span>
+        <input type="text" formControlName="keyword" class="form-control" placeholder="Keyword">
+        <button type="submit" pButton icon="pi pi-search" class="p-button-info"></button>
+      </div>
+    </form>
+  </div>
+  <ng-container *ngIf="books | async as listBooks; else failureOrLoading">
+    <p-table [value]="listBooks">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>image</th>
+          <th>title</th>
+          <th>addedAt</th>
+          <th>status</th>
+          <th></th>
+          <th>sector</th>
+          <th>description</th>
+          <th>delete</th>
+          <th>update</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-c>
+        <tr>
+          <td><img [src]="c.img" alt="no image here"></td>
+          <td>{{c.title}}</td>
+          <td>{{c.addedAt}}</td>
+          <td>
+            <i *ngIf="c.status==true" class="bi bi bi-book-fill text-success"></i>
+          </td>
+          <td *ngIf="authService.hasRole('ADMIN')">
+            <button (click)="handleSetStatus(c)" [ngClass]="{'btn-danger':c.status==true,'btn-success':c.status==false}" class="btn">
+              <span *ngIf="c.status==true">reservation off</span>
+              <span *ngIf="c.status==false">reservation on</span>
+            </button>
+          </td>
+
+
+          <td>{{c.sector}}</td>
+          <td>{{c.description}}</td>
+          <td>
+            <button pButton icon="pi pi-trash" class="p-button-danger" (click)="handleDeleteBook(c)"></button>
+          </td>
+          <td>
+            <button pButton icon="pi pi-folder-open" (click)="handleEditBook(c)" [ngClass]="c.status==true?'btn-danger':'btn-success'" class="btn "></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+
+  <ng-template #failureOrLoading>
+    <div class="text-center mt-2">
+      <p-progressSpinner *ngIf="!errorMessage" class="p-d-inline-block" strokeWidth="4" styleClass="custom-spinner"></p-progressSpinner>
+      <div class="text-danger" *ngIf="errorMessage">
+        {{errorMessage}}
+      </div>
+    </div>
+  </ng-template>
+  <div class="p-paginator">
+    <a class="p-paginator-first p-disabled"><span class="pi pi-angle-double-left"></span></a>
+    <a class="p-paginator-prev p-disabled"><span class="pi pi-angle-left"></span></a>
+    <span class="p-paginator-pages">
+    <a class="p-paginator-page p-link" *ngFor="let item of items"
+       [ngClass]="{'p-highlight': item == currentPage}"
+       (click)="gotoPage(item)">
+      {{item + 1}}
+    </a>
+  </span>
+    <a class="p-paginator-next"><span class="pi pi-angle-right"></span></a>
+    <a class="p-paginator-last"><span class="pi pi-angle-double-right"></span></a>
+  </div>
+</div>

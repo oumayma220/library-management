@@ -1,0 +1,84 @@
+<div class="container">
+  <nav class="p-2 m-2 border-info">
+    <button *ngIf="authService.hasRole('ADMIN')" class="btn btn-outline-info" (click)="handleNewBook()">
+      New Book
+    </button>
+  </nav>
+  <ng-template #errors>
+    <div class="text-danger">
+      {{errorMessage}}
+    </div>
+  </ng-template>
+  <div class="card" *ngIf="books ; else errors">
+    <div class="card-header">Books List</div>
+    <div class="card-body">
+      <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchBooks()">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control" formControlName="Keyword" placeholder="Keyword">
+          <button type="submit" class="btn btn-info">
+            Search
+          </button>
+        </div>
+      </form>
+      <table class="table">
+        <thead>
+        <tr>
+
+          <th>image</th>
+          <th>title</th>
+
+          <th>description</th>
+          <th>status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let b of books">
+
+          <td><img [src]="b.picture" class="card-img-top" alt="..." ></td>
+          <td>{{b.title}}</td>
+
+          <td>{{b.descri}}</td>
+          <td>
+            <i *ngIf="b.status==true" class="bi bi bi-book-fill text-success"></i>
+          </td>
+          <td *ngIf="authService.hasRole('ADMIN')">
+            <button (click)="handleSetStatus(b)" [ngClass]="b.status==true?'btn-danger':'btn-success'" class="btn ">
+              <span *ngIf="b.status==true">reservation off</span>
+              <span *ngIf="b.status==false">reservation on</span>
+            </button>
+          </td>
+          <td *ngIf="!authService.hasRole('ADMIN')"><button class="btn btn-success">reserve</button></td>
+          <td *ngIf="authService.hasRole('ADMIN')">
+            <button (click)="deleteriously(b)" class="btn btn-danger">
+              <i class=" bi bi-trash"></i>
+            </button>
+          </td>
+          <td *ngIf="authService.hasRole('ADMIN')">
+            <button (click)="handleEditBook(b)" class="btn btn-success">
+              <i class=" bi bi-file"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="p-paginator">
+        <a class="p-paginator-first p-disabled"><span class="pi pi-angle-double-left"></span></a>
+        <a class="p-paginator-prev p-disabled"><span class="pi pi-angle-left"></span></a>
+        <span class="p-paginator-pages">
+    <a class="p-paginator-page p-link" *ngFor="let item of items"
+       [ngClass]="{'p-highlight': item == currentPage}"
+       (click)="gotoPage(item)">
+      {{item + 1}}
+    </a>
+  </span>
+        <a class="p-paginator-next"><span class="pi pi-angle-right"></span></a>
+        <a class="p-paginator-last"><span class="pi pi-angle-double-right"></span></a>
+      </div>
+
+    </div>
+  </div>
+</div>

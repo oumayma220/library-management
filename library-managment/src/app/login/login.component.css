@@ -1,0 +1,6 @@
+#houda{
+  background: linear-gradient(120deg,#379eff 0%,#00008B 100%);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
